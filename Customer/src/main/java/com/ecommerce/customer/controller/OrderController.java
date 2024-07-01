@@ -10,8 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 
@@ -26,6 +30,8 @@ public class OrderController {
     private final CountryService countryService;
 
     private final CityService cityService;
+
+    private final VnpayService vnpayService; // Inject VnpayService dependency
 
     @GetMapping("/check-out")
     public String checkOut(Principal principal, Model model) {
@@ -80,20 +86,61 @@ public class OrderController {
     @RequestMapping(value = "/add-order", method = {RequestMethod.POST})
     public String createOrder(Principal principal,
                               Model model,
-                              HttpSession session) {
+                              HttpSession session,
+                              @RequestParam("paymentMethod") String paymentMethod) throws UnsupportedEncodingException {
         if (principal == null) {
             return "redirect:/login";
         } else {
             Customer customer = customerService.findByUsername(principal.getName());
             ShoppingCart cart = customer.getCart();
-            Order order = orderService.save(cart);
-            session.removeAttribute("totalItems");
-            model.addAttribute("order", order);
-            model.addAttribute("title", "Order Detail");
-            model.addAttribute("page", "Order Detail");
-            model.addAttribute("success", "Add order successfully");
-            return "order-detail";
+            Order order;
+            if("cash".equals(paymentMethod)) {
+                // Handle cash payment flow
+                order = orderService.save(cart); // Save order without payment processing for cash on delivery
+                session.removeAttribute("totalItems");
+                model.addAttribute("order", order);
+                model.addAttribute("title", "Order Detail");
+                model.addAttribute("page", "Order Detail");
+                model.addAttribute("success", "Order placed successfully (Cash on delivery)");
+                return "order-detail";
+            }else if("vnpay".equals(paymentMethod)){
+                // Handle VNPAY payment flow
+                order = orderService.save(cart); // Save order without payment processing for VNPAY
+                session.removeAttribute("totalItems");
+                String returnUrl = "http://localhost:8020/vnpay-return"; // URL để VNPAY redirect về sau khi thanh toán
+                String encodedUrl = URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
+                String paymentUrl = vnpayService.generatePaymentUrl(order, encodedUrl);
+
+                // Redirect user to VNPAY payment gateway
+                return "redirect:" + paymentUrl;
+            }else{
+                // Handle invalid payment method case
+                model.addAttribute("error", "Invalid payment method selected");
+                return "checkout"; // Redirect back to checkout with an error messag
+            }
         }
+    }
+
+    // Xử lý response từ VNPAY sau khi thanh toán thành công
+    @GetMapping("/vnpay-return")
+    public String handleVnpayReturn(@RequestParam("vnp_ResponseCode") String vnpResponseCode,
+                                    @RequestParam("vnp_TransactionNo") String vnpTransactionNo,
+                                    RedirectAttributes redirectAttributes) {
+        if ("00".equals(vnpResponseCode)) { // Kiểm tra mã phản hồi từ VNPAY (tuỳ chỉnh theo cấu hình VNPAY)
+            // Lấy thông tin đơn hàng từ session hoặc cơ sở dữ liệu
+            Order order = orderService.findById(Long.parseLong(vnpTransactionNo));
+            if (order != null) {
+                // Cập nhật trạng thái giao dịch hoặc thực hiện hành động cần thiết cho thanh toán thành công
+                // Ví dụ: cập nhật trạng thái đơn hàng là đã thanh toán thành công
+                orderService.update(order);
+
+                // Redirect về trang đơn hàng hoặc trang cần thiết
+                redirectAttributes.addFlashAttribute("order", order);
+                return "redirect:/orders"; // Redirect về trang đơn hàng
+            }
+        }
+        // Xử lý thanh toán thất bại hoặc trường hợp không hợp lệ khác
+        return "redirect:/checkout"; // Redirect về trang checkout
     }
 
 }

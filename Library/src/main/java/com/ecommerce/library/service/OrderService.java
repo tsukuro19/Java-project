@@ -22,4 +22,8 @@ public interface OrderService {
     double getTotalIncome();
 
     void updateDeliveryDate(Long id, Date deliveryDate);
+
+    Order findById(long l);
+
+    void update(Order order);
 }

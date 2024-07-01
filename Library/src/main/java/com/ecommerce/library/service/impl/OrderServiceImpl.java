@@ -104,4 +104,14 @@ public class OrderServiceImpl implements OrderService {
         order.setDeliveryDate(deliveryDate);
         orderRepository.save(order);
     }
+
+    @Override
+    public Order findById(long l) {
+        return null;
+    }
+
+    @Override
+    public void update(Order order) {
+
+    }
 }

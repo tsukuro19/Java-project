@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title th:text="${title}">Menu</title>
+    <title th:text="${title}">Trang chủ</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/gent.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/banner-3.jpg">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -24,8 +24,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
     <!-- Site Icons -->
-    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
-    <link rel="apple-touch-icon" th:href="@{/images/apple-touch-icon.png}">
+    <link rel="shortcut icon" th:href="@{images/banner-1.jpg}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{images/banner-1.jpg}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -44,46 +44,46 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="our-link">
                     <ul>
-                        <li><a href="#"> Call US : +84967631186</a></li>
-                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: Km9, Nguyen Trai, Thanh Xuan,
-                            Ha Noi</a></li>
+                        <li><a href="#"> Phone: +84067631186</a></li>
+                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: Quận 9, Thủ Đức, TP.HCM</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
                     <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
-                        <option>Authentication</option>
-                        <option th:if = "${session.username == null}" value = "http://localhost:8889/shop/login">Sign In </option>
-                        <option th:if = "${session.username == null}" value ="http://localhost:8889/shop/register">Sign Up</option>
+                        <option>Tài Khoản</option>
+                        <option th:if = "${session.username == null}" value = "http://localhost:8020/shop/login">Đăng nhập</option>
+                        <option th:if = "${session.username == null}" value ="http://localhost:8020/shop/register">Đăng ký</option>
+                        <option th:if = "${session.username != null}" value ="http://localhost:8020/shop/logout">Đăng xuất</option>
                     </select>
                 </div>
                 <div class="text-slid-box">
                     <div id="offer-box" class="carouselTicker">
                         <ul class="offer-box">
                             <li>
-                                <i class="fab fa-opencart"></i> Off 5% for new members
+                                <i class="fab fa-opencart"></i> Giảm 5% cho thành viên mới
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> Freeship
+                                <i class="fab fa-opencart"></i> Miễn phí vận chuyển
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime
+                                <i class="fab fa-opencart"></i> Giảm 10% cho toàn bộ mã khuyến mãi khi mua hàng: Elegant Gent
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> Off upto 10%! Shop Now
+                                <i class="fab fa-opencart"></i> Giảm tới 10%! Mua ngay
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> Off 5% for new members
+                                <i class="fab fa-opencart"></i> Giảm 5% cho thành viên mới
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> Freeship
+                                <i class="fab fa-opencart"></i> Miễn phí vận chuyển
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> 10% off Entire Purchase Promo code: OceanPrime
+                                <i class="fab fa-opencart"></i> Giảm 10% cho toàn bộ mã khuyến mãi khi mua hàng: Elegant Gent
                             </li>
                             <li>
-                                <i class="fab fa-opencart"></i> Off 10%! Shop Now
+                                <i class="fab fa-opencart"></i> Giảm tới 10%! Mua ngay
                             </li>
                         </ul>
                     </div>
@@ -105,7 +105,7 @@
                         aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" class="logo" width="130"
+                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/gent.png}" class="logo" width="130"
                                                             height="80" alt=""></a>
             </div>
             <!-- End Header Navigation -->
@@ -113,14 +113,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Danh sách</a></li>
 
                     <li class="dropdown">
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Shop</a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/shop-detail}">Shop Detail</a></li>
-                            <li><a th:href="@{/orders}">Your order</a></li>
+                            <li><a th:href="@{/shop-detail}">Chi tiết sản phẩm</a></li>
+                            <li><a th:href="@{/orders}">Giỏ hàng</a></li>
                             <li><a th:href="@{/profile}">My Account</a></li>
                         </ul>
                     </li>
@@ -138,7 +138,7 @@
                             <i class="fa fa-shopping-bag"></i>
                             <span class="badge"
                                   th:text="${session.totalItems == null} ? '0' : ${session.totalItems}"></span>
-                            <p>My Cart</p>
+                            <p>Giỏ hàng</p>
                         </a>
                     </li>
                 </ul>
@@ -169,7 +169,7 @@
             <div class="col-lg-12">
                 <h2 th:text="${page}"></h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="home.html">Ocean Prime</a></li>
+                    <li class="breadcrumb-item"><a href="home.html">Elegant Gent</a></li>
                     <li class="breadcrumb-item active" th:text="${page}"></li>
                 </ul>
             </div>
@@ -183,41 +183,41 @@
     <div class="main-instagram owl-carousel owl-theme">
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 01 - Fish Tacos.jpg}" alt=""/></a>
+                <a href="index.html"><img th:src="@{/images/banner-1.jpg}" alt=""/></a>
 
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img th:src="@{/images/instagram-img-02.jpg}" alt=""/>
+                <img th:src="@{/images/banner-2.jpg}" alt=""/>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg}" alt=""/></a>
+                <a href="index.html"><img th:src="@{/images/banner-3.jpg}" alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 05 - Almond-Topped Fish.jpg}" alt=""/></a>
+                <a href="index.html"><img th:src="@{/images/banner-4.jpg}" alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}"
+                <a href="index.html"><img th:src="@{/images/banner-5.jpg}"
                                           alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}"
+                <a href="index.html"><img th:src="@{/images/banner-6.jpg}"
                                           alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
                 <a href="index.html"><img
-                        th:src="@{/images/Octopus 06 - Red Wine–Braised Baby Octopus with Black Olives.jpg}"
+                        th:src="@{/images/banner-7.jpg}"
                         alt=""/></a>
             </div>
         </div>
@@ -245,15 +245,15 @@
                         <h3>Contact Us</h3>
                         <ul class="list-time">
                             <li><i class="fas fa-phone-square"></i> Phone number: +84967631186</li>
-                            <li><i class="fas fa-envelope"></i> Email: abc@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address: Km9, Nguyen Trai, Thanh Xuan</li>
+                            <li><i class="fas fa-envelope"></i> Email: duchmv@gmail.com</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Address: Quận 9, Thủ Đức, TP.HCM</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
                         <h3>Social Media</h3>
-                        <p>Come with Ocean Prime shop - Only Fresh </p>
+                        <p>Come with Elegant Gent shop - Gentleman Style </p>
                         <ul>
                             <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
@@ -275,6 +275,7 @@
     <script th:src="@{/js/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <!-- ALL PLUGINS -->
+    <script src="https://kit.fontawesome.com/27b4958ab2.js" crossorigin="anonymous"></script>
     <script th:src="@{/js/jquery.superslides.min.js}"></script>
     <script th:src="@{/js/bootstrap-select.js}"></script>
     <script th:src="@{/js/inewsticker.js}"></script>

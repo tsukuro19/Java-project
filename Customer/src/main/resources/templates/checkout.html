@@ -64,13 +64,6 @@
                         <a th:href="@{/profile}" class="btn btn-primary"> Change information</a>
                         <hr class="mb-4">
                         <div class="title"><span>Payment Methods</span></div>
-                        <div class="d-block my-3">
-                            <div class="custom-control custom-radio">
-                                <input id="debit" name="paymentMethod" type="radio" checked class="custom-control-input"
-                                       required>
-                                <label class="custom-control-label" for="debit">Cash</label>
-                            </div>
-                        </div>
                         <hr class="mb-1">
                     </form>
                 </div>
@@ -126,6 +119,16 @@
                                 <div class="ml-auto h5" th:text="${shoppingCart.totalPrice + 2}"></div>
                             </div>
                             <hr>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="custom-control custom-radio">
+                            <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" value="cash" required>
+                            <label class="custom-control-label" for="cash">Cash on delivery</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input id="vnpay" name="paymentMethod" type="radio" class="custom-control-input" value="vnpay" required>
+                            <label class="custom-control-label" for="vnpay">Pay with VnPay</label>
                         </div>
                     </div>
                     <div class="col-12 d-flex shopping-box">
