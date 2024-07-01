@@ -28,9 +28,10 @@ public class Customer {
     private String phoneNumber;
     private String address;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "name", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
+
     private String country;
 
     @Column(columnDefinition = "boolean default true")
