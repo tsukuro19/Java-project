@@ -3,6 +3,7 @@ package com.ecommerce.customer.controller;
 import com.ecommerce.library.dto.CustomerDto;
 import com.ecommerce.library.model.*;
 import com.ecommerce.library.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,8 @@ public class OrderController {
     private final CityService cityService;
 
     private final VnpayService vnpayService; // Inject VnpayService dependency
+
+    private final MomoService momoService;
 
     @GetMapping("/check-out")
     public String checkOut(Principal principal, Model model) {
@@ -76,10 +79,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/cancel-order", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String cancelOrder(Long id, RedirectAttributes attributes) {
+    public String cancelOrder(@RequestParam("id") Long id, RedirectAttributes attributes) {
         orderService.cancelOrder(id);
-        attributes.addFlashAttribute("success", "Cancel order successfully!");
-        return "redirect:/orders";
+        return "order";
     }
 
 
@@ -87,7 +89,8 @@ public class OrderController {
     public String createOrder(Principal principal,
                               Model model,
                               HttpSession session,
-                              @RequestParam("paymentMethod") String paymentMethod) throws UnsupportedEncodingException {
+                              @RequestParam("paymentMethod") String paymentMethod,
+                              HttpServletRequest request) throws UnsupportedEncodingException {
         if (principal == null) {
             return "redirect:/login";
         } else {
@@ -107,9 +110,9 @@ public class OrderController {
                 // Handle VNPAY payment flow
                 order = orderService.save(cart); // Save order without payment processing for VNPAY
                 session.removeAttribute("totalItems");
-                String returnUrl = "http://localhost:8020/vnpay-return"; // URL để VNPAY redirect về sau khi thanh toán
+                String returnUrl = "http://localhost:8020/shop/vnpayreturn"; // URL để VNPAY redirect về sau khi thanh toán
                 String encodedUrl = URLEncoder.encode(returnUrl, StandardCharsets.UTF_8);
-                String paymentUrl = vnpayService.generatePaymentUrl(order, encodedUrl);
+                String paymentUrl = vnpayService.generatePaymentUrl(order, encodedUrl,request);
 
                 // Redirect user to VNPAY payment gateway
                 return "redirect:" + paymentUrl;
@@ -122,7 +125,7 @@ public class OrderController {
     }
 
     // Xử lý response từ VNPAY sau khi thanh toán thành công
-    @GetMapping("/vnpay-return")
+    @GetMapping("/vnpayreturn")
     public String handleVnpayReturn(@RequestParam("vnp_ResponseCode") String vnpResponseCode,
                                     @RequestParam("vnp_TransactionNo") String vnpTransactionNo,
                                     RedirectAttributes redirectAttributes) {

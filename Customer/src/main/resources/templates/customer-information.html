@@ -93,8 +93,8 @@
             </div>
             <div class="inputDiv">
                 <label class="inputLabel" for="city">City *</label>
-                <select class="form-control" id="city" th:field="*{city}" name="country" required
-                        th:each="city: ${cities}">
+                <select class="form-control" id="city" th:field="*{city}" name="city" required
+                        >
                     <option value="">-SELECT-</option>
                     <option th:each="city : ${cities}"
                             th:value="${city.id}"
